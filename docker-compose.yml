@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  dynamo:
+    container_name: dynamo
+    image: amazon/dynamodb-local
+    env_file: .env
+    ports:
+      - ${DYNAMO_PORT}:${DYNAMO_PORT}
+    command: -jar DynamoDBLocal.jar -port ${DYNAMO_PORT}
+  dynamo-admin:
+    container_name: dynamo-admin
+    image: aaronshaf/dynamodb-admin
+    env_file: .env
+    ports:
+      - ${DYNAMO_ADMIN_PORT}:${DYNAMO_ADMIN_PORT}
+    environment:
+      DYNAMO_ENDPOINT: "http://dynamo:${DYNAMO_PORT}"
+      PORT: ${DYNAMO_ADMIN_PORT}
+      AWS_REGION: "us-east-1"
+      AWS_ACCESS_KEY_ID: local
+      AWS_SECRET_ACCESS_KEY: local
+    depends_on:
+      - dynamo
+  app:
+    container_name: app
+    build: .
+    env_file: .env
+    ports:
+      - 3000:3000
+      - ${APP_PORT}:${APP_PORT}
+    depends_on:
+      - dynamo
+      - dynamo-admin
+    volumes:
+      - ./:/app
+    command: npm run start:dev
