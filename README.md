@@ -25,7 +25,7 @@ To start the app:
 3. Open command pallet (`CMD+SHIFT+P`), type `ports` and hit `Return` to open the "Ports" view
 4. Find the service running on port `3000`, right click and select "Open in Browser". This will take you to the Swagger docs of your running app via the Github Codespace proxy.
 
-As I mentioned, this setup enables Hot Reloading. You can try this by editing the [title of the API docs](https://github.com/benjibuiltit/nest-docker-template/blob/main/src/main.ts?#L14) and then refreshing the docs tab.
+As I mentioned, this setup enables Hot Reloading. You can try this by editing the [title of the API docs](https://github.com/benjibuiltit/nestjs-docker-template/blob/main/src/main.ts#L14) and then refreshing the docs tab.
 
 Finally, because the app is running in a Docker container, you'll need to run your npm scripts indirectly. For example to run tests, run `docker exec -it npm run test`. This opens up an interactive terminal with the container and then executes the `npm run test` command.
 
